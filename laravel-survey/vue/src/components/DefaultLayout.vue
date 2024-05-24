@@ -78,17 +78,15 @@
                                     >
                                         <MenuItem
                                             v-for="item in userNavigation"
-                                            :key="item.name"
+                                            @click="logout"
                                             v-slot="{ active }"
                                         >
                                             <a
-                                                :href="item.href"
                                                 :class="[
-                                                    active ? 'bg-gray-100' : '',
                                                     'block px-4 py-2 text-sm text-gray-700',
                                                 ]"
-                                                >{{ item.name }}</a
-                                            >
+                                                >Sign out<output></output
+                                            ></a>
                                         </MenuItem>
                                     </MenuItems>
                                 </transition>
@@ -123,7 +121,7 @@
                         v-for="item in navigation"
                         :key="item.name"
                         as="a"
-                        :to="item.to.name"
+                        :to="item.to"
                         active-class="bg-gray-900 text-white"
                         :class="[
                             this.$route.name !== item.to.name
@@ -167,11 +165,9 @@
                     <div class="mt-3 space-y-1 px-2">
                         <DisclosureButton
                             v-for="item in userNavigation"
-                            :key="item.name"
-                            as="a"
-                            :href="item.href"
+                            @click="logout"
                             class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                            >{{ item.name }}</DisclosureButton
+                            >Sign out</DisclosureButton
                         >
                     </div>
                 </div>
@@ -195,7 +191,7 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { useStore } from "vuex";
 import { computed } from "vue";
-// import VueRouter from "vue-router";
+import { useRouter } from "vue-router";
 
 const user = {};
 const navigation = [
@@ -207,11 +203,22 @@ const navigation = [
     // { name: "Calendar", href: "#", current: false },
     // { name: "Reports", href: "#", current: false },
 ];
+
+// logout function that will redirect to the login page
+
+function logout() {
+    store.commit("logout");
+    router.push({
+        name: "Login",
+    });
+}
 const userNavigation = [
-    { name: "Your Profile", href: "#" },
-    { name: "Settings", href: "#" },
+    // { name: "Your Profile", href: "#" },
+    // { name: "Settings", href: "#" },
     { name: "Sign out", href: "#" },
+    // { nameL: "Sign out", to: { name: "Login" } },
 ];
+const router = useRouter();
 </script>
 
 <style scoped></style>
