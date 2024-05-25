@@ -9,7 +9,7 @@
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" @submit="register">
                 <!-- name input for the register -->
                 <div>
                     <label
@@ -24,10 +24,13 @@
                             type="text"
                             autocomplete="name"
                             required
+                            v-model="user.name"
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                     </div>
                 </div>
+
+                <!-- enter email address -->
                 <div>
                     <label
                         for="email"
@@ -41,11 +44,13 @@
                             type="email"
                             autocomplete="email"
                             required
+                            v-model="user.email"
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                     </div>
                 </div>
 
+                <!-- enter password -->
                 <div>
                     <div className="flex items-center justify-between">
                         <label
@@ -53,13 +58,6 @@
                             className="block text-sm font-medium leading-6 text-gray-900"
                             >Password</label
                         >
-                        <div className="text-sm">
-                            <router-link
-                                href="#"
-                                className="font-semibold text-indigo-600 hover:text-indigo-500"
-                                >Forgot password?</router-link
-                            >
-                        </div>
                     </div>
                     <div className="mt-2">
                         <input
@@ -68,17 +66,41 @@
                             type="password"
                             autocomplete="current-password"
                             required
+                            v-model="user.password"
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                     </div>
                 </div>
 
+                <!-- confirm password -->
+                <div>
+                    <div className="flex items-center justify-between">
+                        <label
+                            for="password_confirmation"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                            >Confirm password</label
+                        >
+                    </div>
+                    <div className="mt-2">
+                        <input
+                            id="password_confirmation"
+                            name="password_confirmation"
+                            type="password"
+                            autocomplete="current-password_confirmation"
+                            required
+                            v-model="user.password_confirmation"
+                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                    </div>
+                </div>
+
+                <!-- create account-->
                 <div>
                     <button
                         type="submit"
                         className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
-                        Sign in
+                        Create account
                     </button>
                 </div>
             </form>
@@ -94,11 +116,32 @@
         </div>
     </div>
 </template>
-
-<script>
-export default {
-    name: "Register",
+<script setup>
+import { useRouter } from "vue-router";
+import { useStore } from "vuex/dist/vuex.cjs.js";
+const router = useRouter();
+const store = useStore();
+//defining the user object here
+const user = {
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
 };
+
+// defining the register funtion, where we are going to register the user into the database
+function register(ev) {
+    ev.preventDefault();
+    store.dispatch("register", user).then((res) => {
+        router.push({
+            name: "Dashboard",
+        });
+    });
+}
+// export default {
+//     name: "Register",
+// };
+// import { LockedClosedIcon } from "@heroicons/vue/solid";
 </script>
 
 <style scoped></style>

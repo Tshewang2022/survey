@@ -1,11 +1,9 @@
 <template>
-    <h1>this will the survey</h1>
+    <PageComponents title="Surveys"> Content goes here </PageComponents>
 </template>
 
-<script>
-export default {
-    name: "Surveys",
-};
+<script setup>
+import PageComponents from "../components/PageComponents.vue";
 </script>
-<style>
-</style>
+
+<style scoped></style>
