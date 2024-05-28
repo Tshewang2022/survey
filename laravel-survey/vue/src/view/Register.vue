@@ -118,26 +118,32 @@
 </template>
 <script setup>
 import { useRouter } from "vue-router";
-import { useStore } from "vuex/dist/vuex.cjs.js";
+// import { ref } from "vue";
+import store from "../store";
 const router = useRouter();
-const store = useStore();
+// const loading = ref(false);
 //defining the user object here
 const user = {
     name: "",
     email: "",
     password: "",
-    password_confirmation: "",
+    // password_confirmation: "",
 };
 
 // defining the register funtion, where we are going to register the user into the database
-function register(ev) {
+const register = (ev) => {
     ev.preventDefault();
-    store.dispatch("register", user).then((res) => {
+    store.dispatch("register", user).then(() => {
         router.push({
             name: "Dashboard",
         });
     });
-}
+    // .catch((error) => {
+    //     if (error.response.status === 422) {
+    //         errorToJSON.value = error.response.data.errors;
+    //     }
+    // });
+};
 // export default {
 //     name: "Register",
 // };

@@ -1,5 +1,8 @@
 // import { createStore } from "vuex";
 import { createStore } from "vuex";
+
+import axiosClient from "../axios";
+import axios from "axios";
 const store = createStore({
   state: {
     user: {
@@ -12,35 +15,37 @@ const store = createStore({
 
   actions: {
     // api routing for register
-    register({ commit }, user) {
-      return fetch(`http://localhost:8000/api/register`, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(user),
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          commit("setUser", res);
-          return res;
-        });
-    }, 
-    // api routing for login
-    login() {
-      return fetch("api routing", {
-        // object returing the data
-        headers: {},
-        methods: {},
-        body: {},
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          commit("setUser", res);
-          return res;
-        });
+    async register(user) {
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/register",
+          user
+        );
+        return response.data;
+      } catch (error) {
+        // console.log("Registration failed", error);
+        throw error;
+      }
+      // console.log(user);
+      // return axiosClient.post("/register", user).then(({ data }) => {
+      //   commit("setUser", data.user);
+      //   commit("setToken", data.token);
+      //   return data;
+      // });
+      // return axios
+      //   .post("http://127.0.0.1:8000/register", user)
+      //   .then(({ data }) => {
+      //     commit("setUser", data);
+      //     return data;
+      //   });
     },
+    // api routing for login
+    // login() {
+    //   return axiosClient.post("/login", user).then(({ data }) => {
+    //     commit("setUser", data);
+    //     return data;
+    //   });
+    // },
   },
   mutations: {
     logout: (state) => {
