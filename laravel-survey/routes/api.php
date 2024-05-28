@@ -10,4 +10,5 @@ Route::get('/user', function (Request $request) {
 
 
 // creating routes for registration 
-// Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);

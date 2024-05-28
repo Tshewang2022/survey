@@ -22,6 +22,7 @@
                         type="email"
                         autocomplete="email"
                         required
+                        v-model="user.email"
                         class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                 </div>
@@ -48,6 +49,7 @@
                         type="password"
                         autocomplete="current-password"
                         required
+                        v-model="user.password"
                         class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                 </div>
@@ -74,10 +76,30 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: "Login",
+<script setup>
+import store from "../store";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const user = {
+    email: "",
+    password: "",
+    remember: false,
 };
+
+// the function to login into the dashboard
+function login(ev) {
+    ev.preventDefault();
+    store.dispatch("login", user).then(() => {
+        router.push({
+            name: "Dashboard",
+        });
+    });
+}
+// export default {
+//     name: "Login",
+// };
 </script>
 
 <style scoped></style>

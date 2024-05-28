@@ -9,15 +9,31 @@ const store = createStore({
     },
   },
   getters: {},
+
   actions: {
+    // api routing for register
     register({ commit }, user) {
-      return fetch(`http://localhost:8000/register`, {
+      return fetch(`http://localhost:8000/api/register`, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
         method: "POST",
         body: JSON.stringify(user),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          commit("setUser", res);
+          return res;
+        });
+    }, 
+    // api routing for login
+    login() {
+      return fetch("api routing", {
+        // object returing the data
+        headers: {},
+        methods: {},
+        body: {},
       })
         .then((res) => res.json())
         .then((res) => {
