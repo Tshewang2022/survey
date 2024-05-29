@@ -16,7 +16,7 @@ How to create laravel application from scratch
 ## Fontend (vue.js)
 ```bash
     cd Survey
-    npm init vue@latest ./
+    npm init vue@latest vue
     npm i
     npm run dev
 
