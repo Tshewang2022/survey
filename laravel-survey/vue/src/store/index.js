@@ -17,7 +17,7 @@ const store = createStore({
     // api routing for register
     async register(user) {
       try {
-        const response = await axiosClient.post("/register", user);
+        const response = await axiosClient.get("/api/register", user);
         return response.data;
       } catch (error) {
         // console.log("Registration failed", error);
